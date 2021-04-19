@@ -1,17 +1,27 @@
 package main
 
-func () getDevice(int DeviceId) Device {
+func getDevice(DeviceId int ) Device {
+
+	var D Device
+	return D
+}
+
+func getApplication(ApplicationId int ) Application {
+
+	var A Application
+	return A
 
 }
 
-func () getApplication(int ApplicationId) Application {
+func getCommand(CommandId int ) Command {
+
+	var C Command
+	return C
 
 }
 
-func () getCommand(int CommandId) Command {
+func getDevicesWithApplications() Devices {
 
-}
-
-func () getDevicesWithApplications() Devices {
-
+	var Ds Devices
+	return Ds
 }

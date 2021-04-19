@@ -10,8 +10,8 @@ import (
 
 type SmartTV interface {
 	connect() bool
-	build() Message
-	run() Message
+	build() 
+	run() 
 
 }
 
@@ -26,14 +26,12 @@ func (M Connector) connect() bool {
 	return true
 }
 
-func (M Connector) build() bool {
+func (M Connector) build()  {
 	fmt.Printf("TestBuild")
-	return true
 }
 
-func (M Connector) run() bool {
+func (M Connector) run()  {
 	fmt.Printf("TestRun")
-	return true
 }
 
 func (M *Connector) init(RCR RunCommandRequest) {

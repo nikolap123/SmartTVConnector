@@ -2,12 +2,9 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"time"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -17,8 +14,6 @@ import (
 func main() {
 
 	http.HandleFunc("/get-devices" , HandleGetDevices)
-
-	http.HandleFunc("/get-applications" , HandleGetApplications)
 
 	http.HandleFunc("/run-command" , HandleRunCommand)
 
