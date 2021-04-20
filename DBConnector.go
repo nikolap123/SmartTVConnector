@@ -75,12 +75,12 @@ func getCommand(CommandId int ) Command {
 
 func getDevicesWithApplications() Devices {
 
-	db, err := sql.Open("sqlite3", "./database_lite.db")
+	db, err := sqlx.Open("sqlite3", "./database_lite.db")
 	checkErr(err)
 
-	rows, table_check := db.Query("select * from devices inner join application_devices on devices.id = application_devices.device_id inner join on applications.id = application_devices.application_id;")
+	rows, err := db.Queryx("select * from devices inner join application_devices on devices.id = application_devices.device_id inner join on applications.id = application_devices.application_id;")
 
-	log.Fatal(table_check)
+	log.Fatal(err)
 	
 	var Ds Devices
 
