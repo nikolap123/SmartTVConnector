@@ -4,20 +4,27 @@ import (
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
+	_ "github.com/lib/pq"
+    "github.com/jmoiron/sqlx"
+	// "fmt"
 )
 
 func getDevice(DeviceId int ) Device {
 
-	db, err := sql.Open("sqlite3", "./database_lite.db")
+	db, err := sqlx.Open("sqlite3", "./database_lite_smarttv.db")
 	checkErr(err)
 
-	rows, table_check := db.Query("select * from devices where id='';")
+	rows,err := db.Queryx("select * from devices where id=?",DeviceId)
 
-	log.Fatal(table_check)
 	
 	var D Device
 
-	err = rows.Scan(&D)
+	for rows.Next() {
+        err := rows.StructScan(&D)
+        if err != nil {
+            log.Fatalln(err)
+        } 
+    }
 
 	return D
 }
@@ -25,16 +32,20 @@ func getDevice(DeviceId int ) Device {
 func getApplication(ApplicationId int ) Application {
 
 
-	db, err := sql.Open("sqlite3", "./database_lite.db")
+	db, err := sqlx.Open("sqlite3", "./database_lite_smarttv.db")
 	checkErr(err)
 
-	rows, table_check := db.Query("select * from applications where id='';")
+	rows,err := db.Queryx("select * from applications where id=?",ApplicationId)
 
-	log.Fatal(table_check)
 	
 	var A Application
 
-	err = rows.Scan(&A)
+	for rows.Next() {
+        err := rows.StructScan(&A)
+        if err != nil {
+            log.Fatalln(err)
+        } 
+    }
 
 	return A
 
@@ -43,17 +54,20 @@ func getApplication(ApplicationId int ) Application {
 func getCommand(CommandId int ) Command {
 
 
-	db, err := sql.Open("sqlite3", "./database_lite.db")
+	db, err := sqlx.Open("sqlite3", "./database_lite_smarttv.db")
 	checkErr(err)
 
-	rows, table_check := db.Query("select * from commands where id='';")
-	
-	log.Fatal(table_check)
+	rows,err := db.Queryx("select * from commands where id=?",CommandId)
 
+	
 	var C Command
-	
-	err = rows.Scan(&C)
 
+	for rows.Next() {
+        err := rows.StructScan(&C)
+        if err != nil {
+            log.Fatalln(err)
+        } 
+    }
 
 	return C
 

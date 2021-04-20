@@ -2,10 +2,7 @@ package main
 
 
 import (
-	"encoding/json"
 	"fmt"
-    "os"
-	"io/ioutil"
 )
 
 type SmartTV interface {
@@ -36,26 +33,9 @@ func (M Connector) run()  {
 
 func (M *Connector) init(RCR RunCommandRequest) {
 
-	devicesJson, err := os.Open("devices.json")
-    
-    if err != nil {
-        fmt.Println(err)
-    }
-
-    defer devicesJson.Close()
-
-	var devices Devices
-
-	devicesByteValue, _ := ioutil.ReadAll(devicesJson)
-	json.Unmarshal(devicesByteValue, &devices)
-
-	M.Device = devices.Devices[1]
-
-
-
-	// M.Device = getDevice(RCR.DeviceId);
-	// M.Application = getApplication(RCR.ApplicationId);
-	// M.Command = getCommand(RCR.CommandId);
+	M.Device = getDevice(RCR.DeviceId);
+	M.Application = getApplication(RCR.ApplicationId);
+	M.Command = getCommand(RCR.CommandId);
 }
 
 

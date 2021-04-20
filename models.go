@@ -1,29 +1,29 @@
 package main
 
-
 type Command struct {
-	CommandName string
-	Provider string
+	Id int `db:"id"`
+	CommandName string `db:"command_name"`
+	Provider string `db:"provider"`
+}
+
+type Device struct {
+	Id int `db:"id"`
+	Name string `db:"name"`
+	IpAddress string `db:"ip_address"`
+	Year int `db:"year"`
+	Type string `db:"type"`
+	Applications [] Application `json:"applications"`
+}
+
+type Application struct {
+	Id int `db:"id"`
+	Name string `db:"name"`
+	Device_id int `db:"device_id"`
 }
 
 type Devices struct {
 	Devices []Device `json:"devices"`
 }
-
-type Device struct {
-	Id int `json:"id"`
-	Name string `json:"name"`
-	IpAddress string `json:"ip_address"`
-	Year int `json:"year"`
-	Type string `json:"type"`
-	Applications [] Application `json:"applications"`
-}
-
 type Applications struct {
 	Applications []Application `json:"applications"`
-}
-
-type Application struct {
-	Name string `json:"name"`
-	Device_id int `json:"device_id"`
 }
