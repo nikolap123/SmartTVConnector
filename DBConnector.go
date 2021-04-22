@@ -79,8 +79,10 @@ func getDevicesWithApplications() Devices {
 
 	rows, err := db.Queryx("select d.id,d.name,d.ip_address,d.type as tv_type,d.year,a.name as app_name,a.id as app_id from devices as d join application_devices on d.id = application_devices.device_id join applications as a on a.id = application_devices.application_id")
 	
-	var appeard = make(map[int]bool)
+	var appeard = make(map[int]int)
 	var Ds Devices
+
+	var it int = 0
 
 	for rows.Next() {
 		var (
@@ -94,28 +96,18 @@ func getDevicesWithApplications() Devices {
 		)
 		rows.Scan(&id,&name,&ip_address, &tv_type, &year, &app_name,&app_id)
 
-		if appeard[id] {
+		if _, ok := appeard[id]; ok {
 
-			/*
-			* Refactor this
-			*/
-
-			for i, D := range Ds.Devices {
-				if D.Id == id {
-					
-					Ds.Devices[i].Applications = append(Ds.Devices[i].Applications,Application{Id: app_id, Name: app_name})
-					break
-				}
-				
-			  }
-			
+			Ds.Devices[appeard[id]].Applications = append(Ds.Devices[appeard[id]].Applications,Application{Id: app_id, Name: app_name})
 
 		} else {
 			Ds.Devices = append(Ds.Devices,Device{Id:id,Name:name,IpAddress:ip_address,Type:tv_type,Year:year,Applications:[]Application{Application{Id: app_id, Name: app_name}}})
 
-			appeard[id] = true
+			appeard[id] = it
+			it++
 
 		}
+
 	
 	}
 
