@@ -18,7 +18,6 @@ type Device struct {
 type Application struct {
 	Id int `db:"id"`
 	Name string `db:"name"`
-	Device_id int `db:"device_id"`
 }
 
 type Devices struct {

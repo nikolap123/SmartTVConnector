@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 	_ "github.com/lib/pq"
@@ -75,39 +74,52 @@ func getCommand(CommandId int ) Command {
 
 func getDevicesWithApplications() Devices {
 
-	db, err := sqlx.Open("sqlite3", "./database_lite.db")
+	db, err := sqlx.Open("sqlite3", "./database_lite_smarttv.db")
 	checkErr(err)
 
-	rows, err := db.Queryx("select * from devices inner join application_devices on devices.id = application_devices.device_id inner join on applications.id = application_devices.application_id;")
-
-	log.Fatal(err)
+	rows, err := db.Queryx("select d.id,d.name,d.ip_address,d.type as tv_type,d.year,a.name as app_name,a.id as app_id from devices as d join application_devices on d.id = application_devices.device_id join applications as a on a.id = application_devices.application_id")
 	
+	var appeard = make(map[int]bool)
 	var Ds Devices
 
 	for rows.Next() {
-		err = rows.Scan()
+		var (
+		  id  int
+		  app_id int
+		  name   string
+		  ip_address string
+		  tv_type string
+		  year int
+		  app_name string
+		)
+		rows.Scan(&id,&name,&ip_address, &tv_type, &year, &app_name,&app_id)
 
+		if appeard[id] {
+
+			/*
+			* Refactor this
+			*/
+
+			for i, D := range Ds.Devices {
+				if D.Id == id {
+					
+					Ds.Devices[i].Applications = append(Ds.Devices[i].Applications,Application{Id: app_id, Name: app_name})
+					break
+				}
+				
+			  }
+			
+
+		} else {
+			Ds.Devices = append(Ds.Devices,Device{Id:id,Name:name,IpAddress:ip_address,Type:tv_type,Year:year,Applications:[]Application{Application{Id: app_id, Name: app_name}}})
+
+			appeard[id] = true
+
+		}
+	
 	}
+
 
 	return Ds
 }
 
-
-func createTable(db *sql.DB) {
-	createDevicesTableSQL := `CREATE TABLE devices (
-		"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,		
-		"name" TEXT,
-		"ip_address" TEXT,
-		"year" integer,
-		"type" TEXT		
-	  );` // SQL Statement for Create Table
-
-	log.Println("Create devices table...")
-	statement, err := db.Prepare(createDevicesTableSQL) // Prepare SQL Statement
-	if err != nil {
-		log.Fatal(err.Error())
-		return
-	}
-	statement.Exec() // Execute SQL Statements
-	log.Println("devices table created")
-}
