@@ -1,0 +1,14 @@
+{
+    "S01" : "a_ip",
+    "S16" : "a_tv_wgt_path.a_wgt_name",
+    "S18" : "a_tizen_project_path",
+    "S21" : "a_ip",
+    "S23" : "a_tv_wgt_path.a_wgt_name",
+    "S24" : "a_tv_wgt_path",
+    "S31" : "a_ip",
+    "S35" : "a_app_name",
+    "S36" : "a_tv_wgt_path.a_wgt_name",
+    "S41" : "a_ip",
+    "S45" : "a_app_name"
+   
+}

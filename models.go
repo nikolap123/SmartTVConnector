@@ -18,6 +18,7 @@ type Device struct {
 type Application struct {
 	Id int `db:"id"`
 	Name string `db:"name"`
+	WidgetName string `db:"widget_name"`
 }
 
 type Devices struct {
