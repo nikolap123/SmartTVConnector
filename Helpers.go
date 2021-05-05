@@ -8,6 +8,13 @@ import (
 	"fmt"
 )
 
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+
 func parseJson(fileName string) *gabs.Container {
 
 	jsonFile, err := os.Open(fileName)

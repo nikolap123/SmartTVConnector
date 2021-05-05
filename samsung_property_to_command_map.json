@@ -1,7 +1,0 @@
-{
-    "A_ip" : "Device.IpAddress",
-    "H_A_tizen_project_path" : "hardcode/local/path/",
-    "H_A_tv_wgt_path" : "hardcode/wgt/path/",
-    "A_wgt_name" : "Application.WidgetName",
-    "A_app_name" : "Application.Name"
-}

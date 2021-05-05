@@ -50,28 +50,6 @@ func getApplication(ApplicationId int ) Application {
 
 }
 
-func getCommand(CommandId int ) Command {
-
-
-	db, err := sqlx.Open("sqlite3", "./database_lite_smarttv.db")
-	checkErr(err)
-
-	rows,err := db.Queryx("select * from commands where id=?",CommandId)
-
-	
-	var C Command
-
-	for rows.Next() {
-        err := rows.StructScan(&C)
-        if err != nil {
-            log.Fatalln(err)
-        } 
-    }
-
-	return C
-
-}
-
 func getDevicesWithApplications() Devices {
 
 	db, err := sqlx.Open("sqlite3", "./database_lite_smarttv.db")

@@ -1,0 +1,16 @@
+{
+    "DB_ip" : "Device.IpAddress",
+    "DB_device_name" : "Device.Name",
+    "DB_wgt_name" : "Application.WidgetName",
+    "DB_app_name" : "Application.Name",
+    "DB_device_type" : "Device.Type",
+
+
+    "H_host_tizen_project_path" : "C:/Users/Popa/SmartTV/",
+    "H_tv_wgt_path" : "/home/owner/share/tmp/sdk_tools/tmp/",
+    "H_port" : ":26101",
+    "H_wgt_type" : ".wgt",
+    "H_ipk_type" : "_0.0.1_all.ipk",
+
+    "H_DIR_SEPRATOR" : "/"
+}   

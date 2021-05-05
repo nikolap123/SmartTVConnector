@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	// "fmt"
 	// "io/ioutil"
 	// "os"
 	"net/http"
@@ -35,14 +35,10 @@ func HandleRunCommand(w http.ResponseWriter, r *http.Request) {
 
 func HandleGetDevices(w http.ResponseWriter, r *http.Request) {
 
-
 	var devices Devices
-	
-
 	
 	devices = getDevicesWithApplications()
 
-	fmt.Printf("%+v\n",devices)
 	res, err := json.Marshal(devices)
 
 	if err != nil {

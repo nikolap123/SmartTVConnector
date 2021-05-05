@@ -4,12 +4,13 @@ import (
 	"strconv"
 	"strings"
 	"fmt"
+	"errors"
 
 )
 
 func RunCommand(M Connector) {
 
-	jsonParsed := parseJson("commands.json")
+	jsonParsed := parseJson("json_conf/commands.json")
 
 	var tvCommands[] TVCommand
 
@@ -29,14 +30,21 @@ func RunCommand(M Connector) {
 
 		for j := 0; j < len(args); j++ {
 
-			var arg = args[strconv.Itoa(j)].Data().(string)
-
 			if args[strconv.Itoa(j)].Data().(string) == "#" {
 
-				arg = getDynamicArg(string(M.Device.Type[0]) + strconv.Itoa(i) + strconv.Itoa(j),M)
+				arg,err := getDynamicArg(strconv.Itoa(i) + strconv.Itoa(j),M)
+
+				if err != nil {
+					fmt.Println(err)
+				}
+
+				tvCommandArgs = append(tvCommandArgs,arg)
+
+			} else {
+
+				tvCommandArgs = append(tvCommandArgs, args[strconv.Itoa(j)].Data().(string))
 			} 
 
-			tvCommandArgs = append(tvCommandArgs,arg)
 
 		}
 
@@ -50,21 +58,29 @@ func RunCommand(M Connector) {
 
 	}
 
-	fmt.Printf("%v",tvCommands)
+	tvCommands[0].exec()
+
+	// fmt.Printf("%v",tvCommands)
 }
 
-func getDynamicArg (key string,M Connector) string {
+func getDynamicArg (key string,M Connector) (string,error) {
 
-	jsonParsedCommandsMap := parseJson("samsung_command_map.json")
-	jsonParsedPropertyMap := parseJson("samsung_property_to_command_map.json")
+	jsonParsedCommandsMap := parseJson("json_conf/command_map.json")
+	jsonParsedPropertyMap := parseJson("json_conf/property_to_command_map.json")
 
-	var ret_key = jsonParsedCommandsMap.S(key).Data().(string)
+	var ret_key = jsonParsedCommandsMap.S(M.Device.Type,key).Data().(string)
 	
 	exploded := strings.Split(ret_key,".")
 
 	var ret_value string
 
 	for _,a_key := range exploded {
+
+		
+		if jsonParsedPropertyMap.S(a_key).Data() == nil {
+			
+			return "", errors.New("cannot parse key " + a_key)
+		}
 
 		var a_key_value = jsonParsedPropertyMap.S(a_key).Data().(string)
 
@@ -76,5 +92,5 @@ func getDynamicArg (key string,M Connector) string {
 
 	}
 
-	return ret_value
+	return ret_value,nil
 }

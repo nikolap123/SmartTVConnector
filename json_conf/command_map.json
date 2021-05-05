@@ -1,0 +1,25 @@
+{
+    "Samsung" : {
+        "01" : "DB_ip",
+        "16" : "H_host_tizen_project_path.DB_device_type.H_DIR_SEPRATOR.DB_app_name",
+        "18" : "H_host_tizen_project_path.DB_device_type.H_DIR_SEPRATOR.DB_app_name",
+        "21" : "DB_ip.H_A_port",
+        "23" : "H_host_tizen_project_path.DB_device_type.H_DIR_SEPRATOR.DB_app_name.H_wgt_type",
+        "24" : "H_tv_wgt_path",
+        "31" : "DB_ip.H_port",
+        "35" : "DB_wgt_name",
+        "36" : "H_tv_wgt_path.DB_app_name.H_wgt_type",
+        "41" : "DB_ip.H_port",
+        "45" : "DB_wgt_name"
+    
+    },
+    "LG" : {
+        "00" : "H_host_tizen_project_path.DB_device_type.H_DIR_SEPRATOR.DB_app_name",
+        "11" : "DB_device_name",
+        "12" : "H_host_tizen_project_path.DB_device_type.H_DIR_SEPRATOR.DB_app_name.H_ipk_type",
+        "21" : "DB_device_name",
+        "22" : "DB_app_name"
+    }
+  
+   
+}
