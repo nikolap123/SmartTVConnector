@@ -13,6 +13,8 @@ func main() {
 
 	http.HandleFunc("/run-command" , HandleRunCommand)
 
+	http.HandleFunc("/upload-dist" , HandleUploadDist)
+
 	log.Fatal(http.ListenAndServe(":8081", nil))
 
 }

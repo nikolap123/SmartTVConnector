@@ -15,6 +15,7 @@
     },
     "LG" : {
         "00" : "H_host_tizen_project_path.DB_device_type.H_DIR_SEPRATOR.DB_app_name",
+        "02" : "H_host_tizen_project_path.DB_device_type",
         "11" : "DB_device_name",
         "12" : "H_host_tizen_project_path.DB_device_type.H_DIR_SEPRATOR.DB_app_name.H_ipk_type",
         "21" : "DB_device_name",

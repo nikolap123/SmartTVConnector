@@ -10,28 +10,40 @@
 type TVCommand struct {
 	Command string
 	Args []string
+	Result string
 	Next *TVCommand
 }
 
 type TVCommandInterface interface {
 	exec()
+	getResult()
 }
 
-func (C TVCommand) exec()  {
+func (C *TVCommand) exec()  {
 
-	fmt.Println(C.Command)
-	fmt.Println(C.Args)
 	out, err := exec.Command(C.Command,C.Args...).Output()
 
+	
     if err != nil {
 		fmt.Println("Error")
+		log.Println(C.Command)
+		log.Println(C.Args)
         log.Fatal(err)
     }
 
-    fmt.Println(string(out))
+	C.Result = string(out)
 
 	if C.Next != nil {
 		C.Next.exec()
+	} 
+}
+
+func (C TVCommand) getResult() string {
+	
+	if C.Next == nil {
+		return C.Result
 	}
+
+	return C.Result + C.Next.getResult()
 }
 
