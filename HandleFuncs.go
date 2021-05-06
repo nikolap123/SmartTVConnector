@@ -19,7 +19,7 @@ func HandleRunCommand(w http.ResponseWriter, r *http.Request) {
 
 	M.init(RCR)
 
-	res := RunCommand(M)
+	res,err := RunCommand(M)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

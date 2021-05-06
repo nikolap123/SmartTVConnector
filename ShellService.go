@@ -8,7 +8,7 @@ import (
 
 )
 
-func RunCommand(M Connector) string {
+func RunCommand(M Connector) (string,error) {
 
 	jsonParsed := parseJson("json_conf/commands.json")
 
@@ -36,6 +36,7 @@ func RunCommand(M Connector) string {
 
 				if err != nil {
 					fmt.Println(err)
+					return "",err
 				}
 
 				tvCommandArgs = append(tvCommandArgs,arg)
@@ -60,7 +61,7 @@ func RunCommand(M Connector) string {
 
 	tvCommands[0].exec()
 
-	return tvCommands[0].getResult()
+	return tvCommands[0].getResult(),nil
 }
 
 func getDynamicArg (key string,M Connector) (string,error) {
