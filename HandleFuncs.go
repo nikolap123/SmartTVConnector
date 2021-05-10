@@ -101,12 +101,14 @@ func HandleUploadDist(w http.ResponseWriter, r *http.Request) {
 
     defer file.Close()
 
-    tempFile, err := ioutil.TempFile("temp-zips", "upload-*.zip")
+    tempFile, err := ioutil.TempFile("tmp-zips", "upload-*.zip")
 
     if err != nil {
         fmt.Println(err)
     }
+	defer os.Remove(tempFile.Name())
     defer tempFile.Close()
+
 
 	fileBytes, err := ioutil.ReadAll(file)
 
