@@ -6,9 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"os"
+
 )
 
-const ProjectsPath = "C:/Users/Popa/SmartTV"
 
 func HandleRunCommand(w http.ResponseWriter, r *http.Request) {
 
@@ -72,6 +73,8 @@ func HandleGetDevices(w http.ResponseWriter, r *http.Request) {
 
 func HandleUploadDist(w http.ResponseWriter, r *http.Request) {
 
+	var ProjectsPath = os.Getenv("PROJECTS_PATH")
+	
 	var UPR UploadDistRequest
 
 	r.ParseMultipartForm(10 << 20)

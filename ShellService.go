@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"strings"
 	"errors"
+	"os"
 
 )
 
@@ -82,13 +83,26 @@ func getDynamicArg (key string,M Connector) (string,error) {
 			return "", errors.New("cannot parse key " + a_key)
 		}
 
-		var a_key_value = jsonParsedPropertyMap.S(a_key).Data().(string)
+		var a_key_value = ""
 
-		if !strings.HasPrefix(a_key,"H_") {
-			a_key_value	= getField(&M,strings.Split(a_key_value,".")).Interface().(string)
-		} 
+		if strings.HasPrefix(a_key,"DB_") {
+
+			t_val :=  jsonParsedPropertyMap.S(a_key).Data().(string)
+
+			a_key_value	= getField(&M,strings.Split(t_val,".")).Interface().(string)
+
+		} else if strings.HasPrefix(a_key,"E_") {
+
+			t_val :=  jsonParsedPropertyMap.S(a_key).Data().(string)
+
+			a_key_value = os.Getenv(t_val)
+
+		} else {
+			a_key_value = jsonParsedPropertyMap.S(a_key).Data().(string)
+		}
 
 		ret_value = ret_value + a_key_value
+
 
 	}
 

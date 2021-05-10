@@ -3,11 +3,16 @@ package main
 import (
 	"net/http"
 	"log"
+	
+	"github.com/joho/godotenv"
+
 )
 
 
 
 func main() {
+
+	godotenv.Load(".env")
 
 	http.HandleFunc("/get-devices" , HandleGetDevices)
 

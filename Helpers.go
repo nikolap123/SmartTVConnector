@@ -54,6 +54,22 @@ func getField(c *Connector, fields []string) reflect.Value {
 	return value
 }
 
+func getEvnField(field string) string {
+
+    var key_words = strings.Split(field,"_")[1:];
+
+
+    
+    for i,key_word := range key_words {
+        
+        key_words[i] = strings.ToUpper(key_word)
+        
+    }
+
+    return os.Getenv(strings.Join(key_words,"_"))
+
+}
+
 func Unzip(src string, dest string) ([]string, error) {
 
     var filenames []string
