@@ -12,22 +12,44 @@ const ProjectsPath = "C:/Users/Popa/SmartTV"
 
 func HandleRunCommand(w http.ResponseWriter, r *http.Request) {
 
+	setupResponse(&w,r);
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	var RCR RunCommandRequest
 	var M Connector
 
 	err := json.NewDecoder(r.Body).Decode(&RCR)
 
-	M.init(RCR)
-
-	res,err := RunCommand(M)
-
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, "Something went wrong in GO", http.StatusBadRequest)
 		return
 	}
-	
-	w.Header().Set("Content-Type", "text/html")
-  	w.Write([]byte(res))
+
+	M.init(RCR)
+
+	command_response,command_error := RunCommand(M)
+
+	if command_error != nil {
+		w.Header().Set("Content-Type", "application/json")
+		message := CommandResponse{Message:command_error.Error()}
+
+		json,_ := json.Marshal(message)
+
+
+		w.Write(json)
+		return
+	}
+
+	message := CommandResponse{Message:command_response}
+
+	json,_ := json.Marshal(message)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(json)
+	return
 }
 
 func HandleGetDevices(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +65,7 @@ func HandleGetDevices(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
   	w.Write(res)
 }

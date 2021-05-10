@@ -3,7 +3,6 @@ package main
 import (
 	"strconv"
 	"strings"
-	"fmt"
 	"errors"
 
 )
@@ -35,7 +34,6 @@ func RunCommand(M Connector) (string,error) {
 				arg,err := getDynamicArg(strconv.Itoa(i) + strconv.Itoa(j),M)
 
 				if err != nil {
-					fmt.Println(err)
 					return "",err
 				}
 
@@ -60,6 +58,7 @@ func RunCommand(M Connector) (string,error) {
 	}
 
 	tvCommands[0].exec()
+	// fmt.Println(tvCommands)
 
 	return tvCommands[0].getResult(),nil
 }
