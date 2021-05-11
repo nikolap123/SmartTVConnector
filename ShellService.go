@@ -12,9 +12,10 @@ import (
 
 func RunCommand(M Connector) (string,error) {
 
-
-	if !checkExecution(M) {
-		return "",errors.New("This command cannot be executed")
+	err := checkExecution(M)
+	
+	if err != nil {
+		return "",err
 	}
 
 	jsonParsed := parseJson("json_conf/commands.json")
@@ -129,7 +130,7 @@ func getDynamicArg (key string,M Connector) (string,error) {
 	return ret_value,nil
 }
 
-func checkExecution(C Connector) bool {
+func checkExecution(C Connector) error {
 
 	if C.CommandName == "create-project" {
 
@@ -137,11 +138,11 @@ func checkExecution(C Connector) bool {
 	 
 		for _, f := range files {
 			if f.IsDir() && f.Name() == C.Application.Name {
-				return false
+				return errors.New("Project for this Application and Device already exists")
 			}
 		}
 
 	} 
 
-	return true
+	return nil
 }
