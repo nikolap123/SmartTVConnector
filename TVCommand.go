@@ -22,6 +22,7 @@ type TVCommandInterface interface {
 
 func (C *TVCommand) exec()  {
 
+	fmt.Println(C.Command,C.Args)
 	out, err := exec.Command(C.Command,C.Args...).Output()
 
 	C.Result = C.Command + " " + strings.Join(C.Args," ") + "\n " + string(out)

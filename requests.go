@@ -3,6 +3,7 @@ package main
 type RunCommandRequest struct {
 	DeviceId int `json:"DeviceId"`
 	ApplicationId int `json:"ApplicationId"`
+	CommandName string `json:"CommandName"`
 }
 
 type UploadDistRequest struct {

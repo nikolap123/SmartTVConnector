@@ -1,0 +1,25 @@
+{
+    "Samsung" : {
+        "execute" : {
+            "0" : "connect",
+            "1" : "package",
+            "2" : "push",
+            "3" : "install",
+            "4" : "execute"
+        },
+        "create-project" : {
+            "0" : "generate"
+        }
+       
+    },
+    "LG" : {
+        "execute" : {
+            "0" : "package",
+            "1" : "install",
+            "2" : "execute"
+        },
+        "create-project" : {
+            "0" : "generate"
+        }
+    }
+}

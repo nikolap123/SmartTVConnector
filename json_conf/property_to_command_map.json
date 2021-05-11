@@ -12,5 +12,10 @@
     "H_wgt_type" : ".wgt",
     "H_ipk_type" : "_0.0.1_all.ipk",
 
-    "H_DIR_SEPRATOR" : "/"
+    "H_DIR_SEPRATOR" : "/",
+
+    "H_project_template_1" : "{'id':'",
+    "H_project_template_2" : "', 'version':'0.0.1', 'icon':'icon.png', 'type':'web', 'title':'",
+    "H_project_template_3" : "', 'main':'index'}"
+    
 }   
