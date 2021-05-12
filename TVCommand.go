@@ -3,7 +3,6 @@
  import (
 	"fmt"
 	"os/exec"
-	"log"
 	"strings"
 )
 
@@ -28,12 +27,7 @@ func (C *TVCommand) exec()  {
 	C.Result = C.Command + " " + strings.Join(C.Args," ") + "\n " + string(out)
 	
     if err != nil {
-		fmt.Println("Error")
-		log.Println(C.Command)
-		log.Println(C.Args)
 		C.Result = C.Result + "ERROR"
-		// C.Result = C.Result + "\n " + C.Command + "\n "
-		// C.Result = C.Result + "\n " + strings.Join(C.Args," ") + "\n "
 		C.Next = nil
     }
 

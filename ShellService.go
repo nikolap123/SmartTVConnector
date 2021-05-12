@@ -82,8 +82,8 @@ func RunCommand(M Connector) (string,error) {
 
 func getDynamicArg (key string,M Connector) (string,error) {
 
-	jsonParsedCommandsMap := parseJson("json_conf/command_map.json")
-	jsonParsedPropertyMap := parseJson("json_conf/property_to_command_map.json")
+	jsonParsedCommandsMap := parseJson("json_conf/command_args_key_map.json")
+	jsonParsedPropertyMap := parseJson("json_conf/command_args_map.json")
 
 	if jsonParsedCommandsMap.S(M.Device.Type,key).Data() == nil {
 		fmt.Println(key)

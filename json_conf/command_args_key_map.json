@@ -1,0 +1,31 @@
+{
+    "Samsung" : {
+        "connect1" : "DB_ip",
+        "package6" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type.E_DIR_SEPRATOR.DB_app_name",
+        "package8" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type.E_DIR_SEPRATOR.DB_app_name",
+        "push1" : "DB_ip.E_port",
+        "push3" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type.E_DIR_SEPRATOR.DB_app_name.E_wgt_type",
+        "push4" : "E_tv_wgt_path",
+        "install1" : "DB_ip.E_port",
+        "install5" : "DB_wgt_name",
+        "install6" : "E_tv_wgt_path.DB_app_name.E_wgt_type",
+        "execute1" : "DB_ip.E_port",
+        "execute5" : "DB_wgt_name",
+        "generate3" : "DB_app_name",
+        "generate9" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type"
+    
+    },
+    "LG" : {
+        "package0" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type.E_DIR_SEPRATOR.DB_app_name",
+        "package2" : "E_projects_path.DB_device_type",
+        "install1" : "DB_device_name",
+        "install2" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type.E_DIR_SEPRATOR.DB_app_name.E_ipk_type",
+        "execute1" : "DB_device_name",
+        "execute2" : "DB_app_name",
+        "generate0" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type.E_DIR_SEPRATOR.DB_app_name",
+        "generate2" : "E_project_template_1.DB_app_name.E_project_template_2.DB_app_name.E_project_template_3",
+        "generate3" : "DB_app_name"
+    }
+  
+   
+}

@@ -1,0 +1,22 @@
+{
+    "DB_ip" : "Device.IpAddress",
+    "DB_device_name" : "Device.Name",
+    "DB_wgt_name" : "Application.WidgetName",
+    "DB_app_name" : "Application.Name",
+    "DB_device_type" : "Device.Type",
+
+
+    "E_projects_path" : "PROJECTS_PATH",
+
+    "E_tv_wgt_path" : "TV_WGT_PATH",
+    "E_port" : "SAMSUNG_PORT",
+    "E_wgt_type" : "WGT_EXTENSION",
+    "E_ipk_type" : "IPK_EXTENSION",
+
+    "E_DIR_SEPRATOR" : "DIR_SEPARATOR",
+
+    "E_project_template_1" : "LG_PROJECT_TEMPLATE_1",
+    "E_project_template_2" : "LG_PROJECT_TEMPLATE_2",
+    "E_project_template_3" : "LG_PROJECT_TEMPLATE_3"
+    
+}   
