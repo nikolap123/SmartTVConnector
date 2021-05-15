@@ -16,6 +16,8 @@ func main() {
 
 	http.HandleFunc("/get-devices" , HandleGetDevices)
 
+	http.HandleFunc("/get-applications" , HandleGetApplications)
+
 	http.HandleFunc("/run-command" , HandleRunCommand)
 
 	http.HandleFunc("/upload-dist" , HandleUploadDist)

@@ -17,13 +17,13 @@
     },
     "LG" : {
         "package0" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type.E_DIR_SEPRATOR.DB_app_name",
-        "package2" : "E_projects_path.DB_device_type",
+        "package2" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type",
         "install1" : "DB_device_name",
         "install2" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type.E_DIR_SEPRATOR.DB_app_name.E_ipk_type",
         "execute1" : "DB_device_name",
         "execute2" : "DB_app_name",
         "generate0" : "E_projects_path.E_DIR_SEPRATOR.DB_device_type.E_DIR_SEPRATOR.DB_app_name",
-        "generate2" : "E_project_template_1.DB_app_name.E_project_template_2.DB_app_name.E_project_template_3",
+        "generate2" : "E_project_template_1.E_APS.DB_app_name.E_APS.E_project_template_2.E_APS.DB_app_name.E_APS.E_project_template_3",
         "generate3" : "DB_app_name"
     }
   

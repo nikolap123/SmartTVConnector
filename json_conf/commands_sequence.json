@@ -9,6 +9,9 @@
         },
         "create-project" : {
             "0" : "generate"
+        },
+        "execute-without-build" : {
+
         }
        
     },
@@ -20,6 +23,10 @@
         },
         "create-project" : {
             "0" : "generate"
+        },
+        "execute-without-build" : {
+            "0" : "install",
+            "1" : "execute"
         }
     }
 }

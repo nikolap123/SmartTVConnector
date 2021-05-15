@@ -14,3 +14,8 @@ type UploadDistRequest struct {
 type CommandResponse struct {
 	Message string
 }
+
+type DevicesAndApplicationsResponse struct {
+	Devices []Device
+	Applications []Application
+}

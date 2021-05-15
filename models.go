@@ -6,7 +6,6 @@ type Device struct {
 	IpAddress string `db:"ip_address"`
 	Year int `db:"year"`
 	Type string `db:"type"`
-	Applications [] Application `json:"applications"`
 }
 
 type Application struct {

@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"strconv"
 	"os"
-
 )
 
 
@@ -56,10 +55,31 @@ func HandleRunCommand(w http.ResponseWriter, r *http.Request) {
 func HandleGetDevices(w http.ResponseWriter, r *http.Request) {
 
 	var devices Devices
+	var applications Applications
 	
-	devices = getDevicesWithApplications()
+	devices = getDevices()
+	applications = getApplications()
 
-	res, err := json.Marshal(devices)
+	var ADResponse = DevicesAndApplicationsResponse{Applications:applications.Applications,Devices:devices.Devices}
+	res, err := json.Marshal(ADResponse)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+  	w.Write(res)
+}
+
+func HandleGetApplications(w http.ResponseWriter, r *http.Request) {
+
+	var applications Applications
+	
+	applications = getApplications()
+
+	res, err := json.Marshal(applications)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -72,6 +92,12 @@ func HandleGetDevices(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleUploadDist(w http.ResponseWriter, r *http.Request) {
+
+	setupResponse(&w,r);
+
+	if r.Method == "OPTIONS" {
+		return
+	}
 
 	var ProjectsPath = os.Getenv("PROJECTS_PATH")
 	
@@ -96,6 +122,7 @@ func HandleUploadDist(w http.ResponseWriter, r *http.Request) {
     if err != nil {
         fmt.Println("Error Retrieving the File")
         fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
         return
     }
 
@@ -116,8 +143,11 @@ func HandleUploadDist(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
         fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
     }
+
 	fmt.Println(ResolveDeviceTypeUploadDist(DeviceType))
+
 	for _,deviceType := range ResolveDeviceTypeUploadDist(DeviceType) {
 
 		fmt.Println(ProjectsPath + deviceType + Application.Name)
@@ -125,9 +155,18 @@ func HandleUploadDist(w http.ResponseWriter, r *http.Request) {
 
 		if errUnzip != nil {
 			fmt.Println(errUnzip)
+			http.Error(w, errUnzip.Error(), http.StatusBadRequest)
 		}
 
 	}
+
+	message := CommandResponse{Message:"Succesfully uploaded dist"}
+
+	json,_ := json.Marshal(message)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(json)
+	return
 
 	
 

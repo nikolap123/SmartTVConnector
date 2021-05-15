@@ -14,6 +14,7 @@
     "E_ipk_type" : "IPK_EXTENSION",
 
     "E_DIR_SEPRATOR" : "DIR_SEPARATOR",
+    "E_APS" : "APS",
 
     "E_project_template_1" : "LG_PROJECT_TEMPLATE_1",
     "E_project_template_2" : "LG_PROJECT_TEMPLATE_2",
