@@ -19,7 +19,8 @@
         "execute" : {
             "0" : "package",
             "1" : "install",
-            "2" : "execute"
+            "2" : "execute",
+            "3" : "inspect"
         },
         "create-project" : {
             "0" : "generate"

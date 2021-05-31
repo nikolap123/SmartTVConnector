@@ -43,7 +43,7 @@ func HandleRunCommand(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	message := CommandResponse{Message:command_response}
+	message := CommandResponse{Message:"",Data:command_response.ResponseArray}
 
 	json,_ := json.Marshal(message)
 

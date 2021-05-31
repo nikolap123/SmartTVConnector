@@ -13,6 +13,7 @@ type UploadDistRequest struct {
 
 type CommandResponse struct {
 	Message string
+	Data []TVCommandResponse
 }
 
 type DevicesAndApplicationsResponse struct {

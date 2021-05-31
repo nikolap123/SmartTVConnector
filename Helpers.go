@@ -20,6 +20,14 @@ func checkErr(err error) {
 	}
 }
 
+func checkError(e error) (empty string, err error) {
+	if e != nil {
+		return 
+	}
+
+    return
+}
+
 
 func parseJson(fileName string) *gabs.Container {
 

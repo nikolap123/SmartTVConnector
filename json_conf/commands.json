@@ -51,7 +51,7 @@
                 "1" : "#",
                 "2" : "shell",
                 "3" : "0",
-                "4" : "was_execute",
+                "4" : "debug",
                 "5" : "#"
             }
         },
@@ -93,6 +93,15 @@
         },
         "execute" : {
             "command" : "ares-launch",
+            "args" : {
+                "0" : "-d",
+                "1" : "#", 
+                "2" : "#" 
+
+            }
+        },
+        "inspect" : {
+            "command" : "ares-inspect",
             "args" : {
                 "0" : "-d",
                 "1" : "#", 
