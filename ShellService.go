@@ -22,7 +22,7 @@ func RunCommand(M Connector) (SequenceResponse,error) {
 	var ComamndResponse SequenceResponse
 	 
 	tvCommands[0].exec()
-	// tvCommands[0].getResult(&ComamndResponse)
+	tvCommands[0].getResult(&ComamndResponse)
 
 	return ComamndResponse,nil
 }
