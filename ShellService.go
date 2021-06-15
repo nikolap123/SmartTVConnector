@@ -19,12 +19,12 @@ func RunCommand(M Connector) (SequenceResponse,error) {
 	tvCommands,_ := RunBuilder(M)
 	fmt.Println(tvCommands)
 
-	var ComamndResponse SequenceResponse
+	var SequenceResponse SequenceResponse
 	 
 	tvCommands[0].exec()
-	tvCommands[0].getResult(&ComamndResponse)
+	tvCommands[0].getResult(&SequenceResponse)
 
-	return ComamndResponse,nil
+	return SequenceResponse,nil
 }
 
 
@@ -32,7 +32,7 @@ func checkExecution(C Connector) error {
 
 	if C.CommandName == "create-project" {
 
-		files, _ := ioutil.ReadDir(os.Getenv("PROJECTS_PATH") + "/" +C.Device.Type)
+		files, _ := ioutil.ReadDir(os.Getenv("PROJECTS_PATH") + "/" + C.Device.Type)
 	 
 		for _, f := range files {
 			if f.IsDir() && f.Name() == C.Application.Name {
