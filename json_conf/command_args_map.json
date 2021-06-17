@@ -3,6 +3,7 @@
     "DB_device_name" : "Device.Name",
     "DB_wgt_name" : "Application.WidgetName",
     "DB_app_name" : "Application.Name",
+    "DB_app_id" : "Application.Name",
     "DB_device_type" : "Device.Type",
 
 

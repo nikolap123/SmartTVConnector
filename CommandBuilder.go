@@ -149,6 +149,10 @@ func getDynamicArg (key string,M Connector) (string,error) {
 
 			a_key_value	= getField(&M,strings.Split(t_val,".")).Interface().(string)
 
+			if(a_key == "DB_app_id") {
+				a_key_value =  strings.ToLower(a_key_value)
+			}
+
 		} else if strings.HasPrefix(a_key,"E_") {
 
 			t_val :=  jsonParsedPropertyMap.S(a_key).Data().(string)
