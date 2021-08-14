@@ -1,16 +1,14 @@
- package main
+package smarttv
 
- import (
-	"fmt"
-	"os/exec"
-	"strings"
-	"time"
-	"bytes"
-)
-type SequenceResponse struct {
-	ResponseArray []TVCommandResponse
-}
-type TVCommandResponse struct {
+import (
+	 "bytes"
+	 "fmt"
+	 "os/exec"
+	 "strings"
+	 "time"
+ )
+
+type TVCommandResult struct {
 	CommandExp string
 	CommandResult string
 }
@@ -18,16 +16,16 @@ type TVCommandResponse struct {
 type TVCommand struct {
 	Command string
 	Args []string
-	Result TVCommandResponse
+	Result TVCommandResult
 	Next *TVCommand
 }
 
 type TVCommandInterface interface {
-	exec()
-	getResult()
+	Exec()
+	GetResult()
 }
 
-func (C *TVCommand) exec()  {
+func (C *TVCommand) Exec()  {
 
 	if C.Command == "ares-inspect" {
 		// TODO: This should be used with CommandContext to set cmd.Process.Kill timeout
@@ -59,19 +57,19 @@ func (C *TVCommand) exec()  {
 	}
 
 	if C.Next != nil {
-		C.Next.exec()
+		C.Next.Exec()
 	} 
 }
 
-func (C TVCommand) getResult(SR * SequenceResponse) {
-	
-	if C.Next == nil {
-		SR.ResponseArray = append(SR.ResponseArray,C.Result)
-		return 
+func (C TVCommand) GetResult(result *[]TVCommandResult ) {
+
+	*result = append((*result),C.Result)
+
+	if C.Next != nil {
+		C.Next.GetResult(result)
 	}
 
-	SR.ResponseArray = append(SR.ResponseArray,C.Result)
+	return
 
-	C.Next.getResult(SR)
 }
 

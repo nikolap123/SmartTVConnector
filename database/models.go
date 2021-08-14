@@ -1,4 +1,4 @@
-package main
+package database
 
 type Device struct {
 	Id int `db:"id"`

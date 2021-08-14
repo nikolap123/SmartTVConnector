@@ -1,46 +1,46 @@
 package main
 
 import (
+	smartv "SmartTVConnector/smarttv"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
-	"fmt"
-
 )
 
-func RunCommand(M Connector) (SequenceResponse,error) {
+func RunCommand(C smartv.ConnectorDTO) ([]smartv.TVCommandResult,error) {
 
-	err := checkExecution(M)
-	
+	err := checkExecution(C)
+
 	if err != nil {
-		return SequenceResponse{},err
+		return nil,err
 	}
 
-	tvCommands,_ := RunBuilder(M)
+	tvCommands,_ := smartv.RunBuilder(C)
 	fmt.Println(tvCommands)
 
-	var SequenceResponse SequenceResponse
-	 
-	tvCommands[0].exec()
-	tvCommands[0].getResult(&SequenceResponse)
+	var tvCommandResults []smartv.TVCommandResult
 
-	return SequenceResponse,nil
+	tvCommands[0].Exec()
+	tvCommands[0].GetResult(&tvCommandResults)
+
+	return tvCommandResults,nil
 }
 
 
-func checkExecution(C Connector) error {
+func checkExecution(C smartv.ConnectorDTO) error {
 
 	if C.CommandName == "create-project" {
 
 		files, _ := ioutil.ReadDir(os.Getenv("PROJECTS_PATH") + "/" + C.Device.Type)
-	 
+
 		for _, f := range files {
 			if f.IsDir() && f.Name() == C.Application.Name {
 				return errors.New("Project for this Application and Device already exists")
 			}
 		}
 
-	} 
+	}
 
 	return nil
 }

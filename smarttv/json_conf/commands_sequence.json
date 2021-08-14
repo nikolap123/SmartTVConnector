@@ -1,5 +1,8 @@
 {
     "Samsung" : {
+        "package" : {
+            "0" : "package"
+        },
         "execute" : {
             "0" : "connect",
             "1" : "package",
@@ -16,6 +19,9 @@
        
     },
     "LG" : {
+        "package" : {
+            "0" : "package"
+        },
         "execute" : {
             "0" : "package",
             "1" : "install",

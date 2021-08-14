@@ -1,5 +1,10 @@
 package main
 
+import (
+	db "SmartTVConnector/database"
+	smartv "SmartTVConnector/smarttv"
+)
+
 type RunCommandRequest struct {
 	DeviceId int `json:"DeviceId"`
 	ApplicationId int `json:"ApplicationId"`
@@ -11,12 +16,15 @@ type UploadDistRequest struct {
 	DeviceType int // 0 - LG 1 - Samsung 2 - Both
 }
 
-type CommandResponse struct {
+type Response struct {
 	Message string
-	Data []TVCommandResponse
+}
+
+type CommandResponse struct {
+	Data []smartv.TVCommandResult
 }
 
 type DevicesAndApplicationsResponse struct {
-	Devices []Device
-	Applications []Application
+	Devices []db.Device
+	Applications []db.Application
 }

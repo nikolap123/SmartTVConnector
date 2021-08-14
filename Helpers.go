@@ -1,81 +1,19 @@
-package main 
+package main
 
 import (
-    "io/ioutil"
-	"github.com/Jeffail/gabs"
-	"os"
-	"reflect"
-	"fmt"
-	"path/filepath"
 	"archive/zip"
+	"fmt"
 	"io"
-    "net/http"
+	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
-
 )
 
 func checkErr(err error) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func checkError(e error) (empty string, err error) {
-	if e != nil {
-		return 
-	}
-
-    return
-}
-
-
-func parseJson(fileName string) *gabs.Container {
-
-	jsonFile, err := os.Open(fileName)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer jsonFile.Close()
-
-	jsonData, _ := ioutil.ReadAll(jsonFile)
-
-	jsonParsed, err := gabs.ParseJSON(jsonData)
-
-	if err != nil {
-		panic(err)
-	}
-
-	return jsonParsed
-
-}
-
-func getField(c *Connector, fields []string) reflect.Value {
-
-    r := reflect.ValueOf(c)
-	var value = reflect.Indirect(r)
-
-	for _,p_key := range fields {
-		value = value.FieldByName(p_key)
-	}
-
-	return value
-}
-
-func getEvnField(field string) string {
-
-    var key_words = strings.Split(field,"_")[1:];
-
-
-    
-    for i,key_word := range key_words {
-        
-        key_words[i] = strings.ToUpper(key_word)
-        
-    }
-
-    return os.Getenv(strings.Join(key_words,"_"))
-
 }
 
 func Unzip(src string, dest string) ([]string, error) {
@@ -132,7 +70,7 @@ func Unzip(src string, dest string) ([]string, error) {
     return filenames, nil
 }
 
-func ResolveDeviceTypeUploadDist(DeviceType int) []string {
+func ResolveDeviceTypeUpload(DeviceType int) []string {
 
 	switch DeviceType {
 		case 0:
@@ -147,6 +85,7 @@ func ResolveDeviceTypeUploadDist(DeviceType int) []string {
 }
 
 func setupResponse(w *http.ResponseWriter, req *http.Request) {
+	(*w).Header().Set("Content-Type", "application/json")
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
     (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
     (*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")

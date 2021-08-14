@@ -1,20 +1,20 @@
-package main
+package smarttv
 
 import (
 	"errors"
 	"github.com/Jeffail/gabs"
+	"os"
 	"strconv"
 	"strings"
-	"os"
 )
 
+func RunBuilder(M ConnectorDTO) ([]TVCommand,error) {
 
-func RunBuilder(M Connector) ([]TVCommand,error) {
-
-	commandSequence,err := findSequence(M)
+	commandSequencesJson := parseJson("./smarttv/json_conf/commands_sequence.json")
+	commandSequence,err := commandSequencesJson.S(M.Device.Type,M.CommandName).ChildrenMap()
 
 	if err != nil {
-		return []TVCommand{},err
+		return nil,errors.New("Faild to find command sequence")
 	}
 
 	tvCommands := buildCommands(commandSequence,M)
@@ -22,21 +22,9 @@ func RunBuilder(M Connector) ([]TVCommand,error) {
 	return tvCommands,nil
 }
 
-func findSequence(M Connector) (map[string]*gabs.Container,error) {
+func findCommand(M ConnectorDTO,commandName string) (string,map[string]*gabs.Container,error) {
 
-	commandSequencesJson := parseJson("json_conf/commands_sequence.json")
-	commandSequence,err := commandSequencesJson.S(M.Device.Type,M.CommandName).ChildrenMap();
-
-	if err != nil {
-		return nil,errors.New("Faild to find command sequence")
-	}
-
-	return commandSequence,nil
-}
-
-func findCommand(M Connector,commandName string) (string,map[string]*gabs.Container,error) {
-
-	commandJson := parseJson("json_conf/commands.json")
+	commandJson := parseJson("./smarttv/json_conf/commands.json")
 	command := commandJson.S(M.Device.Type,commandName)
 
 	if command == nil {
@@ -44,11 +32,11 @@ func findCommand(M Connector,commandName string) (string,map[string]*gabs.Contai
 	}
 
 	args,_ := command.S("args").ChildrenMap()
-	
+
 	return command.S("command").Data().(string),args,nil
 }
 
-func buildCommands(commandSequence map[string]*gabs.Container, M Connector ) ([] TVCommand) {
+func buildCommands(commandSequence map[string]*gabs.Container, M ConnectorDTO ) ([] TVCommand) {
 
 	var tvCommands[] TVCommand
 
@@ -58,7 +46,7 @@ func buildCommands(commandSequence map[string]*gabs.Container, M Connector ) ([]
 
 		if i < len(commandSequence)-1 {
 			tvCommand.Next = &tvCommands[0]
-		} 
+		}
 
 		tvCommands = append([]TVCommand{tvCommand},tvCommands...)
 
@@ -67,7 +55,7 @@ func buildCommands(commandSequence map[string]*gabs.Container, M Connector ) ([]
 	return tvCommands
 }
 
-func buildCommand(commandName string,M Connector) (TVCommand,error) {
+func buildCommand(commandName string,M ConnectorDTO) (TVCommand,error) {
 
 	command,args,err := findCommand(M,commandName)
 
@@ -78,14 +66,14 @@ func buildCommand(commandName string,M Connector) (TVCommand,error) {
 	tvCommand := TVCommand{
 		Command : command,
 	}
-	
+
 
 	tvCommand.Args,_ = buildArgumets(args,M,commandName)
 
 	return tvCommand,nil
 }
 
-func buildArgumets(args map[string]*gabs.Container, M Connector,commandName string) ([]string,error) {
+func buildArgumets(args map[string]*gabs.Container, M ConnectorDTO,commandName string) ([]string,error) {
 
 	var tvCommandArgs[] string
 
@@ -100,7 +88,7 @@ func buildArgumets(args map[string]*gabs.Container, M Connector,commandName stri
 	return tvCommandArgs,nil
 }
 
-func buildArgumet(arg string,j int,M Connector,commandName string) (string,error) {
+func buildArgumet(arg string,j int,M ConnectorDTO,commandName string) (string,error) {
 
 	if arg != "#"  {
 		return arg,nil
@@ -118,10 +106,10 @@ func buildArgumet(arg string,j int,M Connector,commandName string) (string,error
 
 
 
-func getDynamicArg (key string,M Connector) (string,error) {
+func getDynamicArg (key string,M ConnectorDTO) (string,error) {
 
-	jsonParsedCommandsMap := parseJson("json_conf/command_map.json")
-	jsonParsedPropertyMap := parseJson("json_conf/command_args_map.json")
+	jsonParsedCommandsMap := parseJson("./smarttv/json_conf/command_map.json")
+	jsonParsedPropertyMap := parseJson("./smarttv/json_conf/command_args_map.json")
 
 	if jsonParsedCommandsMap.S(M.Device.Type,key).Data() == nil {
 		return "",errors.New("Command key not found")
@@ -135,9 +123,9 @@ func getDynamicArg (key string,M Connector) (string,error) {
 
 	for _,a_key := range exploded {
 
-		
+
 		if jsonParsedPropertyMap.S(a_key).Data() == nil {
-			
+
 			return "", errors.New("cannot parse key " + a_key)
 		}
 

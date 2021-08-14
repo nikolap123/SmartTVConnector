@@ -1,11 +1,10 @@
 package main
 
 import (
-	"net/http"
 	"log"
-	
-	"github.com/joho/godotenv"
+	"net/http"
 
+	"github.com/joho/godotenv"
 )
 
 
@@ -14,13 +13,13 @@ func main() {
 
 	godotenv.Load(".env")
 
-	http.HandleFunc("/get-devices" , HandleGetDevices)
-
-	http.HandleFunc("/get-applications" , HandleGetApplications)
+	http.HandleFunc("/get-data" , HandleGetData)
 
 	http.HandleFunc("/run-command" , HandleRunCommand)
-
-	http.HandleFunc("/upload-dist" , HandleUploadDist)
+	//
+	//http.HandleFunc("/upload-dist" , HandleUploadDist)
+	//
+	//http.HandleFunc("/upload-build" , HandleUploadBuild)
 
 	log.Fatal(http.ListenAndServe(":8081", nil))
 
