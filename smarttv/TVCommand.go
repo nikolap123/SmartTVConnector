@@ -1,5 +1,6 @@
 package smarttv
 
+import "C"
 import (
 	 "bytes"
 	 "fmt"
@@ -25,11 +26,14 @@ type TVCommandInterface interface {
 	GetResult()
 }
 
-func (C *TVCommand) Exec()  {
+func (R *TVCommand) setArgs(args []string) 	{ R.Args = args }
+func (R *TVCommand) setName(name string)  	{ R.Command = name }
 
-	if C.Command == "ares-inspect" {
+func (R *TVCommand) Exec()  {
+
+	if R.Command == "ares-inspect" {
 		// TODO: This should be used with CommandContext to set cmd.Process.Kill timeout
-		cmd := exec.Command(C.Command,C.Args...)
+		cmd := exec.Command(R.Command,R.Args...)
 		
 		var outb bytes.Buffer
 		cmd.Stdout = &outb
@@ -37,36 +41,36 @@ func (C *TVCommand) Exec()  {
 
 		time.Sleep(5 * time.Second)
 
-		C.Result.CommandExp = C.Command + " " + strings.Join(C.Args," ")
-		C.Result.CommandResult = outb.String()
+		R.Result.CommandExp = R.Command + " " + strings.Join(R.Args," ")
+		R.Result.CommandResult = outb.String()
 
 
 	} else {
-		fmt.Println(C.Command,C.Args)
+		fmt.Println(R.Command,R.Args)
 
-		out, err := exec.Command(C.Command,C.Args...).Output()
+		out, err := exec.Command(R.Command,R.Args...).Output()
 
 		fmt.Println(string(out))
 
-		C.Result.CommandExp = C.Command + " " + strings.Join(C.Args," ")
-		C.Result.CommandResult = string(out)
+		R.Result.CommandExp = R.Command + " " + strings.Join(R.Args," ")
+		R.Result.CommandResult = string(out)
 		
 		if err != nil {
-			C.Next = nil
+			R.Next = nil
     	}
 	}
 
-	if C.Next != nil {
-		C.Next.Exec()
+	if R.Next != nil {
+		R.Next.Exec()
 	} 
 }
 
-func (C TVCommand) GetResult(result *[]TVCommandResult ) {
+func (R TVCommand) GetResult(result *[]TVCommandResult ) {
 
-	*result = append((*result),C.Result)
+	*result = append((*result),R.Result)
 
-	if C.Next != nil {
-		C.Next.GetResult(result)
+	if R.Next != nil {
+		R.Next.GetResult(result)
 	}
 
 	return

@@ -4,6 +4,7 @@ import (
 	db "SmartTVConnector/database"
 	"SmartTVConnector/smarttv"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -15,7 +16,6 @@ func HandleRunCommand(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "OPTIONS" {
 		return
 	}
-
 
 	var RCR RunCommandRequest
 	var C smarttv.ConnectorDTO
@@ -32,11 +32,13 @@ func HandleRunCommand(w http.ResponseWriter, r *http.Request) {
 	commandResponse,err := RunCommand(C)
 
 	if err != nil {
+		fmt.Println(err.Error())
 		message := Response{Message:err.Error()}
-
 		json,_ := json.Marshal(message)
+		w.WriteHeader(http.StatusBadRequest)
 
 		w.Write(json)
+
 		return
 	}
 

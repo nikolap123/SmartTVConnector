@@ -16,15 +16,29 @@ func RunCommand(C smartv.ConnectorDTO) ([]smartv.TVCommandResult,error) {
 		return nil,err
 	}
 
-	tvCommands,_ := smartv.RunBuilder(C)
-	fmt.Println(tvCommands)
+	var B smartv.SequenceBuilder
 
-	var tvCommandResults []smartv.TVCommandResult
+	err = B.Init(C)
 
-	tvCommands[0].Exec()
-	tvCommands[0].GetResult(&tvCommandResults)
+	if err != nil {
+		return nil,err
+	}
 
-	return tvCommandResults,nil
+	err = B.Build()
+
+	if err != nil {
+		return nil,err
+	}
+	fmt.Println(B.GetCommands())
+	//
+	//var tvCommandResults []smartv.TVCommandResult
+	//
+	//tvCommands[0].Exec()
+	//tvCommands[0].GetResult(&tvCommandResults)
+	//
+	//return tvCommandResults,nil
+
+	return nil,nil
 }
 
 
